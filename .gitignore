@@ -3,3 +3,5 @@ bin/
 obj/
 *.user
 *.tmp
+# Runtime uploads
+wwwroot/uploads/

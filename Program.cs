@@ -71,11 +71,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// mohammed ! création automatique de la BD + seed au démarrage ne le change pas svp !!!!!!
-using (var scope = app.Services.CreateScope())
+// Create and seed the development database only in the Development environment.
+if (app.Environment.IsDevelopment())
 {
+    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.EnsureCreated(); // crée toutes les tables depuis le DbContext, sans fichiers migration
+
+    db.Database.EnsureCreated();
     DataSeeder.Seed(db);
 }
 
